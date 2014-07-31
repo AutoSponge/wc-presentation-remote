@@ -1,0 +1,67 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../core-icons/core-icons.html">
+<link rel="import" href="../core-icons/iconsets/av-icons.html">
+<link rel="import" href="../firebase-element/firebase-element.html">
+
+<polymer-element name="wc-presentation-remote">
+    <template>
+        <style>
+            :host {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                box-sizing: border-box;}
+
+            #content {
+                height: 100%;
+            }
+
+            #controls paper-input {
+                width: 30px;
+            }
+        </style>
+        <firebase-element
+                location="https://wc-presentation.firebaseio.com/"
+                data="{{ data }}"></firebase-element>
+        <div id="content" layout horizontal center center-justified>
+                <section id="controls">
+                    <core-icon icon="av:skip-previous" on-tap="{{ prev }}" size="66px"></core-icon>
+                    <core-icon icon="av:skip-next" on-tap="{{ next }}" size="66px"></core-icon>
+                </section>
+        </div>
+    </template>
+    <script>
+        Polymer( 'wc-presentation-remote', {
+
+            /**
+             * The slide position data
+             *
+             * @attribute data
+             * @type object
+             * @default {selected: 0}
+             */
+            data: {
+                selected: 0
+            },
+            /**
+             * Updates the selected attribute to the next slide
+             *
+             * @method next
+             */
+            next: function ( /*e, data, sender*/ ) {
+                this.data.selected += 1;
+                console.log( this.data.selected )
+            },
+
+            /**
+             * Updates the selected attribute to the previous slide
+             *
+             * @method prev
+             */
+            prev: function ( /*e, data, sender*/ ) {
+                this.data.selected -= 1;
+                console.log( this.data.selected )
+            }
+        } );
+    </script>
+</polymer-element>
