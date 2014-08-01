@@ -40,17 +40,16 @@
              * @type object
              * @default {selected: 0}
              */
-            data: {
-                selected: 0
-            },
+
             /**
              * Updates the selected attribute to the next slide
              *
              * @method next
              */
             next: function ( /*e, data, sender*/ ) {
-                this.data.selected += 1;
-                console.log( this.data.selected )
+                if ( this.data.selected < this.data.files - 1 ) {
+                    this.data.selected += 1;
+                }
             },
 
             /**
@@ -59,8 +58,9 @@
              * @method prev
              */
             prev: function ( /*e, data, sender*/ ) {
-                this.data.selected -= 1;
-                console.log( this.data.selected )
+                if ( this.data.selected > 0 ) {
+                    this.data.selected -= 1;
+                }
             }
         } );
     </script>
