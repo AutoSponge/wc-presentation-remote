@@ -1,7 +1,10 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../core-icons/core-icons.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../core-icons/iconsets/av-icons.html">
 <link rel="import" href="../firebase-element/firebase-element.html">
+<link rel="import" href="../firebase-element/firebase-login.html">
 
 <polymer-element name="wc-presentation-remote">
     <template>
@@ -20,14 +23,29 @@
                 width: 30px;
             }
         </style>
+        <firebase-login
+                id="login"
+                user="{{ user }}"
+                statusKnown="{{ statusKnown }}"
+                location="https://wc-presentation.firebaseio.com"
+                on-login="{{ reset }}"></firebase-login>
+
+
         <firebase-element
-                location="https://wc-presentation.firebaseio.com/"
+                id="database"
                 data="{{ data }}"></firebase-element>
         <div id="content" layout horizontal center center-justified>
-                <section id="controls">
-                    <core-icon icon="av:skip-previous" on-tap="{{ prev }}" size="150px"></core-icon>
-                    <core-icon icon="av:skip-next" on-tap="{{ next }}" size="150px"></core-icon>
-                </section>
+            <section hidden?="{{ statusKnown && user }}">
+                <div>
+                    <paper-input label="user" value="{{ email }}"></paper-input>
+                    <paper-input label="password" value="{{ password }}" type="password"></paper-input>
+                    <paper-button block raisedButton label="Login" on-tap="{{ login }}"></paper-button>
+                </div>
+            </section>
+            <section id="controls" hidden?="{{ !statusKnown || !user }}" block>
+                <core-icon icon="av:skip-previous" on-tap="{{ prev }}" size="150px"></core-icon>
+                <core-icon icon="av:skip-next" on-tap="{{ next }}" size="150px"></core-icon>
+            </section>
         </div>
     </template>
     <script>
@@ -61,6 +79,21 @@
                 if ( this.data.selected > 0 ) {
                     this.data.selected -= 1;
                 }
+            },
+            /**
+             * login to firebase
+             *
+             * @method login
+             */
+            login: function () {
+                this.$.login.login( 'password', {
+                    email: this.email,
+                    password: this.password,
+                    rememberMe: true
+                } );
+            },
+            userChanged: function () {
+                this.$.database.location = 'https://wc-presentation.firebaseio.com/' + this.user.id;
             }
         } );
     </script>

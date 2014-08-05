@@ -5,7 +5,10 @@
     "platform": "Polymer/platform#~0.3.4",
     "polymer": "Polymer/polymer#~0.3.4",
     "firebase-element": "Polymer/firebase-element#~0.3.4",
-    "core-icons": "Polymer/core-icons#~0.3.4"
+    "core-icons": "Polymer/core-icons#~0.3.4",
+    "firebase-simple-login": "~1.6.2",
+    "paper-input": "Polymer/paper-input#~0.3.4",
+    "paper-button": "Polymer/paper-button#~0.3.4"
   },
   "devDependencies": {}
 }
